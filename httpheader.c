@@ -87,5 +87,16 @@ void Write(HTTPREQUEST *req, int fd)
 
     count += strlen(req->body);
 
-    write(fd, msg, count);
+    char *buf = malloc(count);
+    *buf = '\0';
+
+    for (int i = 0; i < req->size; i++)
+    {
+        strcat(buf, req->col[i]);
+    }
+
+    strcat(buf, req->body);
+    write(fd, buf, count);
+
+    free(buf);
 }
