@@ -4,21 +4,26 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
+#include <time.h>
 
 #include "httpheader.h"
 
 #define PORT 8080
 
 static int count = 1;
+static int rnd;
 
 int main(int argc, char const *argv[])
 {
     int server_fd, new_socket; long valread;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-      
+    
     char hello[1024];
-       
+
+    srand(time(NULL));
+    rnd = rand() % 500;
+
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         exit(EXIT_FAILURE);
@@ -55,7 +60,7 @@ int main(int argc, char const *argv[])
         AddHeader(req, "HTTP/1.1 200 OK\n");
         AddHeader(req, "Content-Type: text/plain\n");
 
-        sprintf(hello, "Hello from %d %d\n", getpid(), count++);
+        sprintf(hello, "Hello from %d %d\n", rnd, count++);
         
         SetBody(req, hello);
         Write(req,new_socket);
