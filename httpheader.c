@@ -10,7 +10,8 @@ HTTPREQUEST *InitHeaders()
 
     req->size = 1;
 
-    req->body = malloc(1024);
+    req->bodysize = 1024;
+    req->body = malloc(req->bodysize);
     *req->body = '\0';
 
     req->cap = 10;
@@ -52,19 +53,27 @@ int AddHeader(HTTPREQUEST *req, const char *text)
         {
             req->col[i] = NULL;
         }
-
-        req->col[req->size] = malloc(strlen(text) + 1);
-        strcpy(req->col[req->size], text);
-
-        req->size++;
     }
+
+    req->col[req->size] = malloc(strlen(text) + 1);
+    strcpy(req->col[req->size], text);
+
+    req->size++;
 
     return 0;
 }
 
 int SetBody(HTTPREQUEST *req, const char *body)
 {
-    req->body = malloc(strlen(body) + 1);
+    size_t size = strlen(body) + 1;
+
+    if (size > req->bodysize) 
+    {
+        free(req->body);
+        req->body = malloc(size);
+        req->bodysize;
+    }
+
     strcpy(req->body, body);
 }
 
@@ -74,7 +83,7 @@ void Write(HTTPREQUEST *req, int fd)
 
     char msg[1024];
 
-    sprintf(msg, "Content-Length: %ld\n\n", size);
+    sprintf(msg, "Content-Length: %ld\n", size);
 
     AddHeader(req, msg);
 
@@ -95,6 +104,7 @@ void Write(HTTPREQUEST *req, int fd)
         strcat(buf, req->col[i]);
     }
 
+    strcat(buf, "\n");
     strcat(buf, req->body);
     write(fd, buf, count);
 

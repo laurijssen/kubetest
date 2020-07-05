@@ -7,6 +7,7 @@ typedef struct HTTPREQUEST
     int cap;
     char **col;
     char *body;
+    int bodysize;
 } HTTPREQUEST;
 
 extern HTTPREQUEST *InitHeaders();
