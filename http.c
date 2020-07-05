@@ -16,13 +16,9 @@ int main(int argc, char const *argv[])
     int server_fd, new_socket; long valread;
     struct sockaddr_in address;
     int addrlen = sizeof(address);
-    
-    const char *message = "Hello there: ";
-    // Only this line has been changed. Everything is same.
+      
     char hello[1024];
-   
-    
-    // Creating socket file descriptor
+       
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
     {
         exit(EXIT_FAILURE);
@@ -51,14 +47,15 @@ int main(int argc, char const *argv[])
         }
         
         char buffer[30000] = {0};
-        valread = read( new_socket , buffer, 30000);
-        printf("%s\n",buffer );
+        valread = read(new_socket , buffer, 30000);
+        printf("%s\n", buffer);
 
         HTTPREQUEST *req = InitHeaders();
 
+        AddHeader(req, "HTTP/1.1 200 OK\n");
         AddHeader(req, "Content-Type: text/plain\n");
 
-        sprintf(hello, "%s %d", message, count++);
+        sprintf(hello, "Hello from %d %d\n", getpid(), count++);
         
         SetBody(req, hello);
         Write(req,new_socket);

@@ -8,8 +8,7 @@ HTTPREQUEST *InitHeaders()
 {
     HTTPREQUEST *req = malloc(sizeof *req);
 
-    req->size = 1;
-
+    req->size = 0;
     req->bodysize = 1024;
     req->body = malloc(req->bodysize);
     *req->body = '\0';
@@ -21,9 +20,6 @@ HTTPREQUEST *InitHeaders()
     {
         req->col[i] = NULL;
     }
-    const char *first = "HTTP/1.1 200 OK\n";
-    req->col[0] = malloc(strlen(first) + 1);        
-    strcpy(req->col[0], first);
 
     return req;
 }
@@ -106,7 +102,7 @@ void Write(HTTPREQUEST *req, int fd)
 
     strcat(buf, "\n");
     strcat(buf, req->body);
-    write(fd, buf, count);
+    write(fd, buf, count + 1);
 
     free(buf);
 }
