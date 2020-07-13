@@ -13,8 +13,32 @@ spec:
           app: http
       spec:
         containers:
-        - name: my-http
+        - name: call
           image: my-http
+          imagePullPolicy: IfNotPresent
+          command: [ "/main" ]
+          ports:
+          - containerPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-deployment2
+spec:
+    replicas: 3
+    selector:
+      matchLabels:
+        app: http2
+    template:
+      metadata:
+        labels:
+          app: http2
+      spec:
+        containers:
+        - name: call2
+          image: my-http2
           imagePullPolicy: IfNotPresent
           command: [ "/main" ]
           ports:

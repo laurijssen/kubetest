@@ -2,13 +2,18 @@ apiVersion: networking.k8s.io/v1beta1 # for versions before 1.14 use extensions/
 kind: Ingress
 metadata:
   name: http-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1  
 spec:
   rules:
-  - host: localhost
+  - host: laurijssen.westeurope.cloudapp.azure.com
     http:
         paths:
-        - path: /http
+        - path: /http1
           backend:
             serviceName: http-deployment
             servicePort: 8080
-
+        - path: /http2
+          backend:
+            serviceName: http-deployment2
+            servicePort: 8080
