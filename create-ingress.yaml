@@ -3,17 +3,17 @@ kind: Ingress
 metadata:
   name: http-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1  
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-  - host: laurijssen.westeurope.cloudapp.azure.com
+  - host: laurijssen.local
     http:
-        paths:
-        - path: /http1
-          backend:
-            serviceName: http-deployment
-            servicePort: 8080
-        - path: /http2
-          backend:
-            serviceName: http-deployment2
-            servicePort: 8080
+      paths:
+      - path: /http1
+        backend:
+          serviceName: http-deployment
+          servicePort: 8080
+      - path: /http2
+        backend:
+          serviceName: http-deployment2
+          servicePort: 8080
