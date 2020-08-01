@@ -9,11 +9,11 @@ spec:
   - host: laurijssen.local
     http:
       paths:
-      - path: /http1
-        backend:
-          serviceName: http-deployment
-          servicePort: 8080
-      - path: /http2
-        backend:
-          serviceName: http-deployment2
-          servicePort: 8080
+        - path: /http1
+          backend:
+            serviceName: http-deployment1
+            servicePort: 8080
+        - path: /http2
+          backend:
+            serviceName: http-deployment2
+            servicePort: 8080
