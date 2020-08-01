@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: "laurijssen-a966"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: "laurijssen-a966"
+    spec:
+      containers:
+        - name: "laurijssen-a966"
+          image: "httpregistry.azurecr.io/laurijssen"
+          ports:
+          - containerPort: 80
