@@ -5,6 +5,17 @@ metadata:
     run: geocachefriends
   name: geocachefriends
 spec:
+  volumes:
+    - name: sqldata-storage
+      persistentVolumeClaim:
+        claimName: dbclaim
+  initContainers:
+  - name: volume-permissions
+    image: busybox
+    command: ["sh", "-c", "chown -R 10001:0 /var/opt/mssql"]
+    volumeMounts:
+    - mountPath: "/var/opt/mssql"
+      name: sqldata-storage
   containers:
   - image: mcr.microsoft.com/mssql/server
     name: geocachefriends
@@ -21,12 +32,15 @@ spec:
     ports:
     - containerPort: 1433
       name: geocachefriends
+    volumeMounts:
+    - mountPath: "/var/opt/mssql/data"
+      name: sqldata-storage
 ---
 apiVersion: v1
 kind: Service
 metadata:
    name: geocachefriends
-spec:
+spec:  
   type: NodePort
   ports:
   - port: 1433 
