@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-deployment1
+spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: http
+    template:
+      metadata:
+        labels:
+          app: http
+      spec:
+        containers:
+        - name: call
+          image: my-http1
+          imagePullPolicy: IfNotPresent
+          command: [ "/main" ]
+          ports:
+          - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: http-deployment1
+spec:
+  ports:
+  - port: 8080
+    nodePort: 30699
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: http
+  type: NodePort
+status:
+  loadBalancer: {}

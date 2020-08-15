@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: create-database
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: createdatabase
+    template:
+      metadata:
+        labels:
+          app: createdatabase
+      spec:
+        containers:
+        - name: call
+          image: createdatabase
+          imagePullPolicy: IfNotPresent
+          command: [ "/main" ]
+          ports:
+          - containerPort: 8080
