@@ -1,21 +1,20 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: create-database
 spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: createdatabase
     template:
-      metadata:
-        labels:
-          app: createdatabase
       spec:
         containers:
         - name: call
           image: createdatabase
           imagePullPolicy: IfNotPresent
           command: [ "/main" ]
-          ports:
-          - containerPort: 8080
+          env:
+          - name: CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: connection-string
+                key: connection_string
+        restartPolicy: Never
+    backoffLimit: 4      

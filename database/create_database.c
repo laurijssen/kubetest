@@ -24,10 +24,10 @@ void extract_error(char *fn, SQLHANDLE handle, SQLSMALLINT type)
 	{
 		ret = SQLGetDiagRec(type, handle, ++i, SQLState, &NativeError,
 			MessageText, sizeof(MessageText), &TextLength);
-		if (SQL_SUCCEEDED(ret)) {
+		//if (SQL_SUCCEEDED(ret)) {
 			printf("%s:%ld:%ld:%s\n",
 				SQLState, (long)i, (long)NativeError, MessageText);
-		}
+		//}
 	} while (ret == SQL_SUCCESS);
 }
 
@@ -42,8 +42,6 @@ int main()
 	SQLSMALLINT outstrlen;
 
 	int i = 0;    
-
-    printf("starting SQL client");
 
 	retcode = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &henv);
 	CHECK_ERROR(retcode, "SQLAllocHandle(SQL_HANDLE_ENV)",
@@ -62,15 +60,15 @@ int main()
 	SQLSetConnectAttr(hdbc, SQL_LOGIN_TIMEOUT, (SQLPOINTER)5, 0);
 	CHECK_ERROR(retcode, "SQLSetConnectAttr(SQL_LOGIN_TIMEOUT)",
 		hdbc, SQL_HANDLE_DBC);
-	retcode = SQLDriverConnect(hdbc, NULL, "Driver=ODBC Driver 13 for SQL"
-                    "Server;Server=geofriends.westeurope.cloudapp.azure.com,31433;Uid=sa;Pwd=Passw0rd;database=master", 
+
+	SQLCHAR *s = getenv("CONNECTION_STRING");
+
+	retcode = SQLDriverConnect(hdbc, NULL, s, 
 					SQL_NTS, outstr, sizeof(outstr), &outstrlen, SQL_DRIVER_NOPROMPT);
+
 	retcode = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
-	CHECK_ERROR(retcode, "SQLAllocHandle(SQL_HANDLE_STMT)",
-		hstmt, SQL_HANDLE_STMT);
-	retcode = SQLExecDirect(hstmt,
-		(SQLCHAR*) "SELECT DB_NAME()", SQL_NTS);
-	CHECK_ERROR(retcode, "SQLExecDirect()", hstmt, SQL_HANDLE_STMT);
+	CHECK_ERROR(retcode, "SQLAllocHandle(SQL_HANDLE_STMT)", hstmt, SQL_HANDLE_STMT);
+	retcode = SQLExecDirect(hstmt, (SQLCHAR*) "SELECT DB_NAME()", SQL_NTS); CHECK_ERROR(retcode, "SQLExecDirect()", hstmt, SQL_HANDLE_STMT);
 
 	retcode = SQLBindCol(hstmt, 1, SQL_C_CHAR, &strResult, RESULT_LEN, 0);
 
@@ -90,17 +88,12 @@ int main()
 	}
 
 exit:
-	printf("\nComplete.\n");
-	// Free handles
-	// Statement
 	if (hstmt != SQL_NULL_HSTMT)
 		SQLFreeHandle(SQL_HANDLE_STMT, hstmt);
-	// Connection
 	if (hdbc != SQL_NULL_HDBC) {
 		SQLDisconnect(hdbc);
 		SQLFreeHandle(SQL_HANDLE_DBC, hdbc);
 	}
-	// Environment
 	if (henv != SQL_NULL_HENV)
 		SQLFreeHandle(SQL_HANDLE_ENV, henv);
 	return 0;    
