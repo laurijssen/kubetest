@@ -68,9 +68,22 @@ int main()
 
 	retcode = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
 	CHECK_ERROR(retcode, "SQLAllocHandle(SQL_HANDLE_STMT)", hstmt, SQL_HANDLE_STMT);
-	retcode = SQLExecDirect(hstmt, (SQLCHAR*) "SELECT DB_NAME()", SQL_NTS); CHECK_ERROR(retcode, "SQLExecDirect()", hstmt, SQL_HANDLE_STMT);
 
-	retcode = SQLBindCol(hstmt, 1, SQL_C_CHAR, &strResult, RESULT_LEN, 0);
+	SQLCHAR *query = "create table users (id int not null primary key,"
+						   "firstname nvarchar(128),"
+						   "lastname nvarchar(128),"
+						   "loginname nvarchar(32),"
+						   "password nvarchar(32))";
+
+	CHECK_ERROR(SQLExecDirect(hstmt, query, SQL_NTS), "SQLExecDirect", hstmt, SQL_HANDLE_STMT);
+
+	printf("users created\n");
+
+	query = "create table login (id int not null primary key, lat float, long float, userid int not null constraint fk_user foreign key(userid) references users(id))";
+
+	CHECK_ERROR(SQLExecDirect(hstmt, query, SQL_NTS), "SQLExecDirect", hstmt, SQL_HANDLE_STMT);
+
+	/*retcode = SQLBindCol(hstmt, 1, SQL_C_CHAR, &strResult, RESULT_LEN, 0);
 
 	for (i = 0; ; i++) {
 		retcode = SQLFetch(hstmt);
@@ -85,7 +98,7 @@ int main()
 				break;
 			}
 		}
-	}
+	}*/
 
 exit:
 	if (hstmt != SQL_NULL_HSTMT)
