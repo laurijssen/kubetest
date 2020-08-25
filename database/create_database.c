@@ -24,10 +24,10 @@ void extract_error(char *fn, SQLHANDLE handle, SQLSMALLINT type)
 	{
 		ret = SQLGetDiagRec(type, handle, ++i, SQLState, &NativeError,
 			MessageText, sizeof(MessageText), &TextLength);
-		//if (SQL_SUCCEEDED(ret)) {
+		if (SQL_SUCCEEDED(ret)) {
 			printf("%s:%ld:%ld:%s\n",
 				SQLState, (long)i, (long)NativeError, MessageText);
-		//}
+		}
 	} while (ret == SQL_SUCCESS);
 }
 
