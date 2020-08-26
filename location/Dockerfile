@@ -1,4 +1,4 @@
-FROM alpine:latest as build2
+FROM alpine:latest as buildlocation
 LABEL description="Build container"
 RUN apk update && apk add --no-cache build-base cmake curl gcc git libgcc libtool linux-headers musl-dev
 COPY *.c /
@@ -12,5 +12,5 @@ RUN cmake --build .
 FROM alpine:latest as runtime
 LABEL description="Run container"
 RUN apk update && apk add --no-cache libstdc++
-COPY --from=build2 /main /
+COPY --from=buildlocation /main /
 ENTRYPOINT ["/main"]
