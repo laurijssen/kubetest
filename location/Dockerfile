@@ -3,6 +3,8 @@ LABEL description="Build container location service"
 RUN apk update && apk add --no-cache build-base cmake curl gcc git libgcc libtool linux-headers musl-dev
 COPY ../lib/*.c /
 COPY ../lib/*.h /
+COPY ../protocrepo/gen/*.c /
+COPY ../protocrepo/gen/*.h /
 COPY *.c /
 COPY *.h /
 RUN gcc -o /main *.c -O3
