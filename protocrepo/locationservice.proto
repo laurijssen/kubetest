@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+service RouteGuide {
+    rpc ConvertPoint(Point) returns (Point) {}
+}
+
+message Point {
+  int32 latitude = 1;
+  int32 longitude = 2;
+}
