@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
         AddHeader(req, "HTTP/1.1 200 OK\n");
         AddHeader(req, "Content-Type: text/plain\n");
 
-        sprintf(hello, "Hello from %d %d\n", rnd, count++);
+        sprintf(hello, "Again from %d %d\n", rnd, count++);
         
         SetBody(req, hello);
         Write(req,new_socket);
