@@ -2,10 +2,9 @@ FROM alpine:latest as build
 LABEL description="Build database container"
 
 RUN apk update && apk add --no-cache build-base gcc libgcc libtool musl-dev unixodbc-dev
-    #nm -D /usr/lib/libodbc.so
 
-COPY *.c /
-COPY *.h /
+COPY services/createdatabase/*.c /
+COPY services/createdatabase/*.h /
 RUN gcc -L/usr/lib -o /main *.c -l odbc -O3
 
 FROM alpine:latest as runtime
