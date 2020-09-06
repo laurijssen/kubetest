@@ -12,4 +12,6 @@
 
 -----
 
+* protoc -I protocrepo --grpc_out=/location --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` locationservice.proto
+* protoc -I protocrepo --cpp_out=location locationservice.proto
 * g++ -o main *.cc -I$HOME/kubetest/location $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
