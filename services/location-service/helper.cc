@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "locationservice.grpc.pb.h"
+#include "service.grpc.pb.h"
 
 namespace routeguide {
 

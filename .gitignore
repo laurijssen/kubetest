@@ -1,4 +1,6 @@
 *.o
 *.gch
 gen
+bin
 .vscode
+0

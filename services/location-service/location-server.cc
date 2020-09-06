@@ -19,9 +19,7 @@
 #include <grpcpp/server_context.h>
 #include <grpcpp/security/server_credentials.h>
 #include "helper.h"
-#include "locationservice.grpc.pb.h"
-
-#define PORT 8080
+#include "service.grpc.pb.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -160,8 +158,8 @@ class RouteGuideImpl final : public RouteGuide::Service {
 };
 
 void RunServer(const std::string &db_path)
-{
-    std::string server_address("0.0.0.0:50051");
+{  
+    std::string server_address("0.0.0.0:30700");
     RouteGuideImpl service(db_path);
 
     ServerBuilder builder;
@@ -174,6 +172,7 @@ void RunServer(const std::string &db_path)
 
 int main(int argc, char const *argv[])
 {
+    std::cout << "starting routeguide" << std::endl;
     std::string db = routeguide::GetDbFileContent(argc, argv);
     RunServer(db);  
     return 0;
