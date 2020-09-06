@@ -9,3 +9,7 @@
 * vboxmanage list (running)vms
 * vboxmanage showvminfo minikube | grep [pP]ort
 * vboxmanage controlvm minikube natpf1 "port30092,tcp,,30092,,30092"
+
+-----
+
+* g++ -o main *.cc -I$HOME/.local/include -I$HOME/kubetest/location -L$HOME/.local/lib -lprotobuf -lgrpc++ -lgrpc -lgpr -lcrypto -lpthread
