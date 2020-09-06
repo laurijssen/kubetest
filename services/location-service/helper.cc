@@ -9,7 +9,7 @@
 
 namespace routeguide {
 
-std::string GetDbFileContent(int argc, char** argv) {
+std::string GetDbFileContent(int argc, const char** argv) {
   std::string db_path;
   std::string arg_str("--db_path");
   if (argc > 1) {
