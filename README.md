@@ -12,4 +12,4 @@
 
 -----
 
-* g++ -o main *.cc $HOME/.local/lib/*.a -I$HOME/.local/include -I$HOME/kubetest/location -L$HOME/.local/lib -lprotobuf -lcrypto -lpthread -lgpr -labsl_str_format_internal -labsl_base -labsl_int128 -labsl_strings -labsl_time -labsl_time_zone -lcares -labsl_log_severity -labsl_raw_logging_internal -lupb -laddress_sorting -labsl_throw_delegate -labsl_strings_internal
+* g++ -o main *.cc -I$HOME/kubetest/location $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
