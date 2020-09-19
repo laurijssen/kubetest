@@ -48,6 +48,7 @@ int main(int argc, char const *argv[])
         printf("\n+++++++ Waiting for new connection ++++++++\n\n");
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
         {
+            printf("Erroring out\n");
             exit(EXIT_FAILURE);
         }
         

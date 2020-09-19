@@ -71,8 +71,6 @@ int SetBody(HTTPREQUEST *req, const char *body)
     }
 
     strcpy(req->body, body);
-
-    return 0;
 }
 
 void Write(HTTPREQUEST *req, int fd)

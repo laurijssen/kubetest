@@ -18,18 +18,18 @@ for dir in services/*/ ; do
 
         pushd services/$imagename
 
-        if [ -f ./proto/service.proto ]; then
-            protoc -I ./proto --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` ./proto/service.proto 
-            protoc -I ./proto --cpp_out=. ./proto/service.proto
-        fi
+        # if [ -f ./proto/service.proto ]; then
+        #     protoc -I ./proto --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` ./proto/service.proto 
+        #     protoc -I ./proto --cpp_out=. ./proto/service.proto
+        # fi
 
-        count=`ls -1 *.cc 2>/dev/null | wc -l`
+        #count=`ls -1 *.cc 2>/dev/null | wc -l`
         
-        if [ $count != 0 ]; then
-            g++ -o ./bin/main *.cc ../../lib/*.cc -I../../lib $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
-        else
-            gcc -o ./bin/main *.c ../../lib/*.cc -I../../lib $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
-        fi
+        # if [ $count != 0 ]; then
+        #     g++ -o ./bin/main *.cc ../../lib/*.cc -I../../lib $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
+        # else
+        #     gcc -o ./bin/main *.c ../../lib/*.cc -I../../lib $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
+        # fi
 
         if [ -f Dockerfile ]; then
             docker build -t $imagename -f Dockerfile .
