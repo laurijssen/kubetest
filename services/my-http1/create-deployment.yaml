@@ -14,8 +14,8 @@ spec:
       spec:
         containers:
         - name: call
-          image: my-http1
-          imagePullPolicy: IfNotPresent
+          image: 192.168.56.3:5000/my-http1
+          imagePullPolicy: Always
           command: [ "/main" ]
           ports:
           - containerPort: 8080

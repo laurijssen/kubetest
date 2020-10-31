@@ -41,17 +41,18 @@ int main(int argc, char const *argv[])
     }
     if (listen(server_fd, 10) < 0)
     {
+        printf("listen failed\n");
         exit(EXIT_FAILURE);
     }
     while(1)
     {
-        printf("\n+++++++ Waiting for new connection ++++++++\n\n");
+        printf("\nWaiting for new connection ++++++++\n\n");
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
         {
             printf("Erroring out\n");
             exit(EXIT_FAILURE);
         }
-        
+                
         char buffer[30000] = {0};
         valread = read(new_socket , buffer, 30000);
         printf("%s\n", buffer);

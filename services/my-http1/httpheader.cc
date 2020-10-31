@@ -61,7 +61,7 @@ int AddHeader(HTTPREQUEST *req, const char *text)
 
 int SetBody(HTTPREQUEST *req, const char *body)
 {
-    size_t size = strlen(body) + 1;
+    size_t size = std::strlen(body) + 1;
 
     if (size > req->bodysize) 
     {
@@ -71,6 +71,8 @@ int SetBody(HTTPREQUEST *req, const char *body)
     }
 
     strcpy(req->body, body);
+
+    return 0;
 }
 
 void Write(HTTPREQUEST *req, int fd)
