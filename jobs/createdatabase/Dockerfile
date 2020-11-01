@@ -1,15 +1,6 @@
-FROM alpine:latest as build
-LABEL description="Build database container"
-
-RUN apk update && apk add --no-cache build-base gcc libgcc libtool musl-dev unixodbc-dev
-
-COPY *.c /
-COPY *.h /
-RUN gcc -L/usr/lib -o /main *.c -lodbc -O3
-
-FROM alpine:latest as runtime
+FROM alpine:latest
 LABEL description="Run database container"
-RUN apk update && apk add --no-cache libstdc++ curl gnupg && \
+RUN apk update && apk add --no-cache curl gnupg python3 python3-dev build-base gcc libgcc libtool musl-dev unixodbc-dev && \
     curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.6.1.1-1_amd64.apk && \
     curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/mssql-tools_17.6.1.1-1_amd64.apk && \
     curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.6.1.1-1_amd64.sig && \
@@ -18,6 +9,12 @@ RUN apk update && apk add --no-cache libstdc++ curl gnupg && \
     gpg --verify msodbcsql17_17.6.1.1-1_amd64.sig msodbcsql17_17.6.1.1-1_amd64.apk && \
     gpg --verify mssql-tools_17.6.1.1-1_amd64.sig mssql-tools_17.6.1.1-1_amd64.apk && \
     apk add --allow-untrusted msodbcsql17_17.6.1.1-1_amd64.apk && \
-    apk add --allow-untrusted mssql-tools_17.6.1.1-1_amd64.apk
-COPY --from=build /main /
-ENTRYPOINT ["/main"]
+    apk add --allow-untrusted mssql-tools_17.6.1.1-1_amd64.apk && \
+    ln -sf python3 /usr/bin/python
+
+RUN python3 -m ensurepip
+RUN pip3 install --no-cache --upgrade pip setuptools pyodbc
+
+COPY createdatabase.py /
+
+CMD [ "python", "/createdatabase.py" ] 

@@ -1,12 +1,5 @@
 #!/bin/bash
 
-count=`minikube status | grep [Rr]unning | wc -l`
-if [ $count == 0 ]; then 
-    minikube start --driver=virtualbox
-fi
-
-eval $(minikube docker-env)
-
 export PKG_CONFIG_PATH=/home/laurijssen/.local/lib/pkgconfig
 
 for dir in services/*/ ; do
@@ -32,7 +25,9 @@ for dir in services/*/ ; do
         # fi
 
         if [ -f Dockerfile ]; then
-            docker build -t $imagename -f Dockerfile .
+            sudo docker build -t $imagename -f Dockerfile .
+            sudo docker tag $imagename 192.168.56.3:5000/$imagename
+            sudo docker push 192.168.56.3:5000/$imagename
         fi
 
         popd
@@ -49,7 +44,9 @@ for dir in jobs/*/ ; do
         pushd jobs/$imagename
 
         if [ -f Dockerfile ]; then
-            docker build -t $imagename -f Dockerfile .
+            sudo docker build -t $imagename -f Dockerfile .
+            sudo docker tag $imagename 192.168.56.3:5000/$imagename
+            sudo docker push 192.168.56.3:5000/$imagename
         fi
 
         popd

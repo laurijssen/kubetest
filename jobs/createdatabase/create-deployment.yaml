@@ -7,14 +7,19 @@ spec:
       spec:
         containers:
         - name: call
-          image: createdatabase
-          imagePullPolicy: IfNotPresent
-          command: [ "/main" ]
+          image: 192.168.56.3:5000/createdatabase
+          imagePullPolicy: Always
+          command: [ "python", "/createdatabase.py" ]
           env:
           - name: CONNECTION_STRING
             valueFrom:
               secretKeyRef:
                 name: connection-string
                 key: connection_string
+          - name: SA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sql-password
+                key: sa_password
         restartPolicy: Never
     backoffLimit: 4      
