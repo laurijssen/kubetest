@@ -9,8 +9,21 @@ password = os.getenv('SA_PASSWORD')
 cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
 cursor = cnxn.cursor()
 
-cursor.execute("SELECT @@version;") 
-row = cursor.fetchone() 
-while row: 
-    print(row[0])
-    row = cursor.fetchone()
+def execute(q):
+    try:
+        cursor.execute(qry) 
+        cnxn.commit()
+        print(qry + ' completed')
+    except:
+        print('exception on execute query')
+
+qry = """if not exists (select 1 from information_schema.tables where table_name = 'users')
+           create table users (id int not null primary key, firstname nvarchar(128), lastname nvarchar(128), loginname nvarchar(32), password nvarchar(32))
+      """
+
+execute(qry)
+
+qry = """insert into users values (1, 'serve', 'laurijssen', 'lau', 'test')
+      """
+
+execute(qry)
