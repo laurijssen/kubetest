@@ -10,9 +10,9 @@ RUN apk update && apk add --no-cache curl gnupg python3 python3-dev build-base g
     gpg --verify mssql-tools_17.6.1.1-1_amd64.sig mssql-tools_17.6.1.1-1_amd64.apk && \
     apk add --allow-untrusted msodbcsql17_17.6.1.1-1_amd64.apk && \
     apk add --allow-untrusted mssql-tools_17.6.1.1-1_amd64.apk && \
-    ln -sf python3 /usr/bin/python
+    ln -sf python /usr/bin/python
 
-RUN python3 -m ensurepip
+RUN python -m ensurepip
 RUN pip3 install --no-cache --upgrade pip setuptools pyodbc
 
 COPY createdatabase.py /

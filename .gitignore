@@ -4,3 +4,4 @@ gen
 bin
 .vscode
 0
+__pycache__

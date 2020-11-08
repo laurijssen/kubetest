@@ -11,19 +11,16 @@ for dir in services/*/ ; do
 
         pushd services/$imagename
 
-        # if [ -f ./proto/service.proto ]; then
-        #     protoc -I ./proto --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` ./proto/service.proto 
-        #     protoc -I ./proto --cpp_out=. ./proto/service.proto
-        # fi
+        if [ -f ./proto/service.proto ]; then
+            python3 -m grpc_tools.protoc proto/*.proto --python_out=. --proto_path=. --grpc_python_out=.
+            if [ $? -ne 0 ]; then
+                echo "Build grpc server failed"
+                exit 1
+            fi
 
-        #count=`ls -1 *.cc 2>/dev/null | wc -l`
-        
-        # if [ $count != 0 ]; then
-        #     g++ -o ./bin/main *.cc ../../lib/*.cc -I../../lib $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
-        # else
-        #     gcc -o ./bin/main *.c ../../lib/*.cc -I../../lib $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
-        # fi
-
+            sed -i -E 's/^import.*_pb2/from . \0/' ./proto/*.py
+        fi
+       
         if [ -f Dockerfile ]; then
             sudo docker build -t $imagename -f Dockerfile .
             sudo docker tag $imagename 192.168.56.3:5000/$imagename
