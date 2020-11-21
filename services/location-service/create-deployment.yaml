@@ -14,9 +14,9 @@ spec:
       spec:
         containers:
         - name: location
-          image: location-service
-          imagePullPolicy: IfNotPresent
-          command: [ "/main" ]
+          image: 192.168.56.3:5000/location-service
+          imagePullPolicy: Always
+          command: [ "python3", "__main__.py" ]
           ports:
           - containerPort: 8080
 
@@ -29,10 +29,10 @@ metadata:
   name: location
 spec:
   ports:
-  - port: 8080
+  - port: 8081
     nodePort: 30700
     protocol: TCP
-    targetPort: 8080
+    targetPort: 8081
   selector:
     app: location
   type: NodePort
