@@ -32,6 +32,7 @@ for dir in services/*/ ; do
 done
 
 for dir in jobs/*/ ; do
+    echo $dir
     if [ -f "$dir/Dockerfile" ]; then
         imagename=$(echo $dir | sed 's/\/$//
                                      s/jobs\///')

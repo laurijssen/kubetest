@@ -5,7 +5,7 @@ import grpc
 from proto import service_pb2 as proto_dot_service__pb2
 
 
-class EchoStub(object):
+class LocationStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -15,13 +15,18 @@ class EchoStub(object):
             channel: A grpc.Channel.
         """
         self.Reply = channel.unary_unary(
-                '/echo.Echo/Reply',
+                '/echo.Location/Reply',
                 request_serializer=proto_dot_service__pb2.EchoRequest.SerializeToString,
                 response_deserializer=proto_dot_service__pb2.EchoReply.FromString,
                 )
+        self.Store = channel.unary_unary(
+                '/echo.Location/Store',
+                request_serializer=proto_dot_service__pb2.Position.SerializeToString,
+                response_deserializer=proto_dot_service__pb2.PositionReply.FromString,
+                )
 
 
-class EchoServicer(object):
+class LocationServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def Reply(self, request, context):
@@ -30,22 +35,33 @@ class EchoServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Store(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
-def add_EchoServicer_to_server(servicer, server):
+
+def add_LocationServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'Reply': grpc.unary_unary_rpc_method_handler(
                     servicer.Reply,
                     request_deserializer=proto_dot_service__pb2.EchoRequest.FromString,
                     response_serializer=proto_dot_service__pb2.EchoReply.SerializeToString,
             ),
+            'Store': grpc.unary_unary_rpc_method_handler(
+                    servicer.Store,
+                    request_deserializer=proto_dot_service__pb2.Position.FromString,
+                    response_serializer=proto_dot_service__pb2.PositionReply.SerializeToString,
+            ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'echo.Echo', rpc_method_handlers)
+            'echo.Location', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class Echo(object):
+class Location(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -59,8 +75,25 @@ class Echo(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/echo.Echo/Reply',
+        return grpc.experimental.unary_unary(request, target, '/echo.Location/Reply',
             proto_dot_service__pb2.EchoRequest.SerializeToString,
             proto_dot_service__pb2.EchoReply.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Store(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/echo.Location/Store',
+            proto_dot_service__pb2.Position.SerializeToString,
+            proto_dot_service__pb2.PositionReply.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

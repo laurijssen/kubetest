@@ -15,3 +15,16 @@
 * protoc -I protocrepo --grpc_out=/location --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` locationservice.proto
 * protoc -I protocrepo --cpp_out=location locationservice.proto
 * g++ -o main *.cc -I$HOME/kubetest/location $(pkg-config --cflags --libs grpc++) -lpthread -lprotobuf
+
+-----
+
+create database manually with Azure data studio
+
+Build job createdatabase
+build normal docker image
+tag for repository
+push to repository
+
+* sudo docker build -t createdatabase -f Dockerfile .
+* sudo docker tag createdatabase 192.168.56.3:5000/createdatabase
+* sudo docker push 192.168.56.3:5000/createdatabase

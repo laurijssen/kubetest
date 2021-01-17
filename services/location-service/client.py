@@ -5,15 +5,19 @@ import socket
 import grpc
 
 from proto.service_pb2 import EchoRequest
-from proto.service_pb2_grpc import EchoStub
+from proto.service_pb2 import Position
+from proto.service_pb2_grpc import LocationStub
 
 ip = [i[4][0] for i in socket.getaddrinfo('kubemaster', None)][0]
 
 def run():
     with grpc.insecure_channel(f'{ip}:30700') as channel:
-        stub = EchoStub(channel)
+        stub = LocationStub(channel)
         response = stub.Reply(EchoRequest(message='Hoppa'))
-    print("Echo client received: " + response.message)
+        print("Echo client received: " + response.message)
+
+        response = stub.Store(Position(lon=4.12342, lat=51.14566))
+        print(response.message)
 
 
 if __name__ == '__main__':

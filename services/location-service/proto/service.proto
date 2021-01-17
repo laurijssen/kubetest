@@ -10,6 +10,17 @@ message EchoReply {
   string message = 1;
 }
 
-service Echo {
+message Position {
+  float lon = 1;
+  float lat = 2;
+}
+
+message PositionReply {
+  string message = 1;
+}
+
+service Location {
   rpc Reply (EchoRequest) returns (EchoReply) {}
+
+  rpc Store(Position) returns (PositionReply) {}
 }

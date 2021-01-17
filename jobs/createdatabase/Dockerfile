@@ -17,4 +17,4 @@ RUN pip3 install --no-cache --upgrade pip setuptools pyodbc
 
 COPY createdatabase.py /
 
-CMD [ "python", "/createdatabase.py" ] 
+CMD [ "python3", "/createdatabase.py" ] 

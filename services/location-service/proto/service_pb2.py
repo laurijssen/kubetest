@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x13proto/service.proto\x12\x04\x65\x63ho\"\x1e\n\x0b\x45\x63hoRequest\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1c\n\tEchoReply\x12\x0f\n\x07message\x18\x01 \x01(\t25\n\x04\x45\x63ho\x12-\n\x05Reply\x12\x11.echo.EchoRequest\x1a\x0f.echo.EchoReply\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x13proto/service.proto\x12\x04\x65\x63ho\"\x1e\n\x0b\x45\x63hoRequest\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1c\n\tEchoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"$\n\x08Position\x12\x0b\n\x03lon\x18\x01 \x01(\x02\x12\x0b\n\x03lat\x18\x02 \x01(\x02\" \n\rPositionReply\x12\x0f\n\x07message\x18\x01 \x01(\t2i\n\x08Location\x12-\n\x05Reply\x12\x11.echo.EchoRequest\x1a\x0f.echo.EchoReply\"\x00\x12.\n\x05Store\x12\x0e.echo.Position\x1a\x13.echo.PositionReply\"\x00\x62\x06proto3'
 )
 
 
@@ -88,8 +88,81 @@ _ECHOREPLY = _descriptor.Descriptor(
   serialized_end=89,
 )
 
+
+_POSITION = _descriptor.Descriptor(
+  name='Position',
+  full_name='echo.Position',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='lon', full_name='echo.Position.lon', index=0,
+      number=1, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='lat', full_name='echo.Position.lat', index=1,
+      number=2, type=2, cpp_type=6, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=91,
+  serialized_end=127,
+)
+
+
+_POSITIONREPLY = _descriptor.Descriptor(
+  name='PositionReply',
+  full_name='echo.PositionReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='message', full_name='echo.PositionReply.message', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=129,
+  serialized_end=161,
+)
+
 DESCRIPTOR.message_types_by_name['EchoRequest'] = _ECHOREQUEST
 DESCRIPTOR.message_types_by_name['EchoReply'] = _ECHOREPLY
+DESCRIPTOR.message_types_by_name['Position'] = _POSITION
+DESCRIPTOR.message_types_by_name['PositionReply'] = _POSITIONREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 EchoRequest = _reflection.GeneratedProtocolMessageType('EchoRequest', (_message.Message,), {
@@ -106,21 +179,35 @@ EchoReply = _reflection.GeneratedProtocolMessageType('EchoReply', (_message.Mess
   })
 _sym_db.RegisterMessage(EchoReply)
 
+Position = _reflection.GeneratedProtocolMessageType('Position', (_message.Message,), {
+  'DESCRIPTOR' : _POSITION,
+  '__module__' : 'proto.service_pb2'
+  # @@protoc_insertion_point(class_scope:echo.Position)
+  })
+_sym_db.RegisterMessage(Position)
+
+PositionReply = _reflection.GeneratedProtocolMessageType('PositionReply', (_message.Message,), {
+  'DESCRIPTOR' : _POSITIONREPLY,
+  '__module__' : 'proto.service_pb2'
+  # @@protoc_insertion_point(class_scope:echo.PositionReply)
+  })
+_sym_db.RegisterMessage(PositionReply)
 
 
-_ECHO = _descriptor.ServiceDescriptor(
-  name='Echo',
-  full_name='echo.Echo',
+
+_LOCATION = _descriptor.ServiceDescriptor(
+  name='Location',
+  full_name='echo.Location',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=91,
-  serialized_end=144,
+  serialized_start=163,
+  serialized_end=268,
   methods=[
   _descriptor.MethodDescriptor(
     name='Reply',
-    full_name='echo.Echo.Reply',
+    full_name='echo.Location.Reply',
     index=0,
     containing_service=None,
     input_type=_ECHOREQUEST,
@@ -128,9 +215,19 @@ _ECHO = _descriptor.ServiceDescriptor(
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),
+  _descriptor.MethodDescriptor(
+    name='Store',
+    full_name='echo.Location.Store',
+    index=1,
+    containing_service=None,
+    input_type=_POSITION,
+    output_type=_POSITIONREPLY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
 ])
-_sym_db.RegisterServiceDescriptor(_ECHO)
+_sym_db.RegisterServiceDescriptor(_LOCATION)
 
-DESCRIPTOR.services_by_name['Echo'] = _ECHO
+DESCRIPTOR.services_by_name['Location'] = _LOCATION
 
 # @@protoc_insertion_point(module_scope)
