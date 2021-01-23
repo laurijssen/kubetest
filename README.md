@@ -1,4 +1,4 @@
-# kubetest
+# geofriends
 
 * kubectl create deployment http-deployment --image=my-http
 * kubectl expose deployment http-deployment --type=NodePort --port=8080
