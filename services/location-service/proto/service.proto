@@ -11,8 +11,9 @@ message EchoReply {
 }
 
 message Position {
-  float lon = 1;
-  float lat = 2;
+  int32 userid = 1;
+  float lon = 2;
+  float lat = 3;
 }
 
 message PositionReply {

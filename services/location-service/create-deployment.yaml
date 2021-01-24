@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: location
 spec:
-    replicas: 3
+    replicas: 1
     selector:
       matchLabels:
         app: location
@@ -19,6 +19,17 @@ spec:
           command: [ "python3", "__main__.py" ]
           ports:
           - containerPort: 8080
+          env:
+          - name: CONNECTION_STRING
+            valueFrom:
+              secretKeyRef:
+                name: connection-string
+                key: connection_string
+          - name: SA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sql-password
+                key: sa_password
 
 ---
 

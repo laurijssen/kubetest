@@ -1,4 +1,4 @@
-from __future__ import print_function
+#from __future__ import print_function
 import logging
 import socket
 
@@ -13,11 +13,13 @@ ip = [i[4][0] for i in socket.getaddrinfo('kubemaster', None)][0]
 def run():
     with grpc.insecure_channel(f'{ip}:30700') as channel:
         stub = LocationStub(channel)
-        response = stub.Reply(EchoRequest(message='Hoppa'))
-        print("Echo client received: " + response.message)
 
-        response = stub.Store(Position(lon=4.12342, lat=51.14566))
-        print(response.message)
+        response = stub.Reply(EchoRequest(message='Hoppa'))
+        print("Client received: " + response.message)
+
+        response = stub.Store(Position(userid=1, lon=4.12342, lat=51.14566))
+        print("Store received " + response.message)
+
 
 
 if __name__ == '__main__':

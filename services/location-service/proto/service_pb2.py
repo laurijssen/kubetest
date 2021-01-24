@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x13proto/service.proto\x12\x04\x65\x63ho\"\x1e\n\x0b\x45\x63hoRequest\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1c\n\tEchoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"$\n\x08Position\x12\x0b\n\x03lon\x18\x01 \x01(\x02\x12\x0b\n\x03lat\x18\x02 \x01(\x02\" \n\rPositionReply\x12\x0f\n\x07message\x18\x01 \x01(\t2i\n\x08Location\x12-\n\x05Reply\x12\x11.echo.EchoRequest\x1a\x0f.echo.EchoReply\"\x00\x12.\n\x05Store\x12\x0e.echo.Position\x1a\x13.echo.PositionReply\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x13proto/service.proto\x12\x04\x65\x63ho\"\x1e\n\x0b\x45\x63hoRequest\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1c\n\tEchoReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"4\n\x08Position\x12\x0e\n\x06userid\x18\x01 \x01(\x05\x12\x0b\n\x03lon\x18\x02 \x01(\x02\x12\x0b\n\x03lat\x18\x03 \x01(\x02\" \n\rPositionReply\x12\x0f\n\x07message\x18\x01 \x01(\t2i\n\x08Location\x12-\n\x05Reply\x12\x11.echo.EchoRequest\x1a\x0f.echo.EchoReply\"\x00\x12.\n\x05Store\x12\x0e.echo.Position\x1a\x13.echo.PositionReply\"\x00\x62\x06proto3'
 )
 
 
@@ -98,15 +98,22 @@ _POSITION = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='lon', full_name='echo.Position.lon', index=0,
-      number=1, type=2, cpp_type=6, label=1,
+      name='userid', full_name='echo.Position.userid', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='lon', full_name='echo.Position.lon', index=1,
+      number=2, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='lat', full_name='echo.Position.lat', index=1,
-      number=2, type=2, cpp_type=6, label=1,
+      name='lat', full_name='echo.Position.lat', index=2,
+      number=3, type=2, cpp_type=6, label=1,
       has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -124,7 +131,7 @@ _POSITION = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=91,
-  serialized_end=127,
+  serialized_end=143,
 )
 
 
@@ -155,8 +162,8 @@ _POSITIONREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=129,
-  serialized_end=161,
+  serialized_start=145,
+  serialized_end=177,
 )
 
 DESCRIPTOR.message_types_by_name['EchoRequest'] = _ECHOREQUEST
@@ -202,8 +209,8 @@ _LOCATION = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=163,
-  serialized_end=268,
+  serialized_start=179,
+  serialized_end=284,
   methods=[
   _descriptor.MethodDescriptor(
     name='Reply',

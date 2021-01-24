@@ -1,3 +1,4 @@
+import os
 import pyodbc
 import proto.service_pb2_grpc
 import proto.service_pb2
@@ -7,7 +8,7 @@ class Locator(proto.service_pb2_grpc.LocationServicer):
     i = 0
 
     def Reply(self, request, context):
-        reply = f'\nYou said: {request.message} {self.i}' * 10
+        reply = f'\nYou said: {request.message} {self.i}' * 2
         self.i += 1
         return proto.service_pb2.EchoReply(message=reply)
 
@@ -19,8 +20,15 @@ class Locator(proto.service_pb2_grpc.LocationServicer):
         username = 'sa' 
         password = os.getenv('SA_PASSWORD')
 
-        cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER='+server+';DATABASE='+database+';UID='+username+';PWD='+ password)
+        print('storing coordinates')
+
+        cnxn = pyodbc.connect('DRIVER={ODBC Driver 17 for SQL Server};SERVER=' +
+                      server+';DATABASE='+database+';UID='+username+';PWD=' + password)
+
         cursor = cnxn.cursor()
+
+        cursor.execute(f'insert into locations values ({request.userid}, {request.lon}, {request.lat})')
+        cnxn.commit()
 
         return proto.service_pb2.PositionReply(message=reply)
 
