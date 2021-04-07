@@ -34,3 +34,4 @@ push to repository
 rewrite history with removed file
 
 git filter-branch --force --index-filter "git rm --cached --ignore-unmatch Projects/RopsDAL/FFIG/dealer.xml" HEAD
+git push -f
