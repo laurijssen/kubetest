@@ -28,3 +28,9 @@ push to repository
 * sudo docker build -t createdatabase -f Dockerfile .
 * sudo docker tag createdatabase 192.168.56.3:5000/createdatabase
 * sudo docker push 192.168.56.3:5000/createdatabase
+
+-----
+
+rewrite history with removed file
+
+git filter-branch --force --index-filter "git rm --cached --ignore-unmatch Projects/RopsDAL/FFIG/dealer.xml" HEAD
