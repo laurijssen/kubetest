@@ -162,6 +162,23 @@ class Location(db.Model):
     lat = db.Column(db.Float)
 
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    @staticmethod
+    def from_json(json_location):
+        lon = json_location.get('lon')
+        lat = json_location.get('lat')
+        if (lon is None or lon == '') or (lat is None or lat == ''):
+            raise ValidationError('location does not have lateral data')
+        return Location(lon=lon, lat=lat)
+
+    def to_json(self):
+        json_loc = {
+            'url': url_for('api.get_location', id=self.user_id),
+            'longitude': self.lon,
+            'latitude': self.lat
+        }
+        return json_loc
+
     
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
