@@ -6,8 +6,9 @@ from flask_sqlalchemy import get_debug_queries
 from . import main
 from .forms import NameForm, EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
 from .. import db
-from ..models import User, Role, Post, Permission, Comment
+from ..models import User, Role, Post, Permission, Comment, Location
 from ..decorators import admin_required, permission_required
+from ..api.locations import get_location
 
 @main.after_app_request
 def after_request(response):
@@ -165,13 +166,14 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
 
     posts = user.posts.order_by(Post.timestamp.desc()).all()
-
-    return render_template('user.html', user=user, posts=posts)
+    locresponse =  get_location(user.id)
+    loc =  Location.from_json(locresponse.json)
+    
+    return render_template('user.html', user=user, posts=posts, loc=loc)
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    print(str(current_user.is_administrator()) + ' ' + str(current_user.role))
     form = EditProfileForm()
     if form.validate_on_submit():
         current_user.name = form.name.data
