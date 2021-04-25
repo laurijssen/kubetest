@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_pagedown import PageDown
 from flask_sqlalchemy import SQLAlchemy
+from flask_googlemaps import GoogleMaps
 from config import config
 
 bootstrap = Bootstrap()
@@ -13,11 +14,13 @@ moment = Moment()
 db = SQLAlchemy()
 login_manager = LoginManager()
 pagedown = PageDown()
+googlemaps = GoogleMaps()
 
 login_manager.login_view = 'auth.login'
 
 def create_app(config_name):
     app = Flask(__name__)
+
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
@@ -27,6 +30,7 @@ def create_app(config_name):
     db.init_app(app)
     login_manager.init_app(app)
     pagedown.init_app(app)
+    googlemaps.init_app(app)
 
     if app.config['SSL_REDIRECT']:
         from flask_sslify import SSLify

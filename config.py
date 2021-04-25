@@ -17,6 +17,7 @@ class Config:
     POSTS_PER_PAGE = os.environ.get('POSTS_PER_PAGE')
     FOLLOWERS_PER_PAGE = os.environ.get('FOLLOWERS_PER_PAGE')
     COMMENTS_PER_PAGE = os.environ.get('COMMENTS_PER_PAGE')
+    GOOGLEMAPS_KEY = os.environ.get('GOOGLEMAPS_KEY')
     SSL_REDIRECT = False
 
     SQLALCHEMY_RECORD_QUERIES = True
