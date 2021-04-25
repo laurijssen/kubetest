@@ -1,5 +1,4 @@
 from flask_wtf import FlaskForm
-from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_pagedown.fields import PageDownField
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField

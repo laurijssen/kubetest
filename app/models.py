@@ -206,7 +206,6 @@ class Location(db.Model):
         fmt += str(int(abs(d))) + ' ' + str(int(m)) + '\'' + str(round(s, 3))
         return fmt
 
-    
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
