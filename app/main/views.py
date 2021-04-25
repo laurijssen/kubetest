@@ -169,7 +169,7 @@ def user(username):
     locresponse =  get_location(user.id)
     loc =  Location.from_json(locresponse.json)
     
-    return render_template('user.html', user=user, posts=posts, loc=loc)
+    return render_template('user.html', user=user, posts=posts, loc=loc.format())
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required

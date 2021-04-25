@@ -179,6 +179,33 @@ class Location(db.Model):
         }
         return json_loc
 
+    @staticmethod
+    def decdeg2dms(dd):
+        is_positive = dd >= 0
+        dd = abs(dd)
+        minutes,seconds = divmod(dd*3600,60)
+        degrees,minutes = divmod(minutes,60)
+        degrees = degrees if is_positive else -degrees
+        return (degrees,minutes,seconds)
+
+    def format(self):
+        (lat, lon) = self.lat, self.lon
+        fmt = 'S '
+        if lat >=0:
+            fmt = 'N '
+
+        (d, m, s) = Location.decdeg2dms(lat)
+        fmt += str(int(abs(d))) + ' ' + str(int(m)) + '\'' + str(round(s, 3))
+
+        if lon < 0:
+            fmt += ' W '
+        else:
+            fmt += ' E '
+
+        (d, m, s) = Location.decdeg2dms(lon)
+        fmt += str(int(abs(d))) + ' ' + str(int(m)) + '\'' + str(round(s, 3))
+        return fmt
+
     
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
