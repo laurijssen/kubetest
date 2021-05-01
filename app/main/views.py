@@ -171,6 +171,10 @@ def user(username):
     
     return render_template('user.html', user=user, posts=posts, loc=loc.format())
 
+@main.route('/contact', methods=['GET', 'POST'])
+def contact():
+    return render_template('contact.html')
+
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():

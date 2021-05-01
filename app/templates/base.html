@@ -8,8 +8,28 @@
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 {% endblock %}
 
+{% block styles %}
+{{ super() }}
+<style>
+    .navbar-custom {
+    background-color: #08630d;
+}/* change the brand and text color */
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-text {
+    color: rgb(255,255,255);
+}/* change the link color */
+.navbar-custom .navbar-nav .nav-link {
+    color: rgb(255,255,255);
+}/* change the color of active or hovered links */
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+    color: #ffffff;
+}
+</style>
+{% endblock %}
+
 {% block navbar %}
-<div class="navbar navbar-dark bg-danger" role="navigation">
+<div class="navbar navbar-custom" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -24,7 +44,7 @@
             <ul class="nav navbar-nav">
                 {% if current_user.is_authenticated %}
                 <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
-                <li><a href="{{ url_for('main.user', username=current_user.username) }}">Contact</a></li>
+                <li><a href="{{ url_for('main.contact', username=current_user.username) }}">Contact</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
